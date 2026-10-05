@@ -22,9 +22,12 @@ jobs:
         run: |
           npm install -g bun
           bun install
+          npm install @capacitor/core @capacitor/android @capacitor/cli
 
-      - name: Build Web Assets
-        run: bun run build
+      - name: Build Web Assets & Sync
+        run: |
+          bun run build
+          npx cap sync android || true
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
@@ -32,12 +35,11 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Setup Gradle Wrapper & Build APK
-        run: |
-          cd android
-          gradle wrapper
-          chmod +x gradlew
-          ./gradlew assembleDebug
+      - name: Build Gradle APK
+        uses: gradle/gradle-build-action@v3
+        with:
+          build-root-directory: android
+          arguments: assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
