@@ -18,15 +18,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Bun / Dependencies
+      - name: Install Dependencies
         run: |
-          npm install -g bun
-          bun install
-          npm install @capacitor/core @capacitor/android @capacitor/cli
+          npm install --legacy-peer-deps
 
       - name: Build Web Assets & Sync
         run: |
-          bun run build
+          npm run build
           npx cap sync android || true
 
       - name: Setup Java JDK
@@ -35,11 +33,14 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Build Gradle APK
-        uses: gradle/gradle-build-action@v3
-        with:
-          build-root-directory: android
-          arguments: assembleDebug
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build APK
+        run: |
+          cd android
+          chmod +x gradlew || true
+          ./gradlew assembleDebug || gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
