@@ -1,0 +1,8 @@
+{
+  "name": "ConnectWave - Realtime Mobile & Web Chat",
+  "description": "A modern, cross-platform real-time chat application for Web, Android, and iOS powered by Firebase Firestore and Authentication.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

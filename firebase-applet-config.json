@@ -1,0 +1,12 @@
+{
+  "projectId": "my-qchat",
+  "appId": "1:537534745030:web:b7abb82d0f595a7abe4ac7",
+  "apiKey": "AIzaSyBjp0DWgyGENKA5K930fwjgRHDKjR8M3Ek",
+  "authDomain": "my-qchat.firebaseapp.com",
+  "firestoreDatabaseId": "",
+  "storageBucket": "my-qchat.firebasestorage.app",
+  "messagingSenderId": "537534745030",
+  "measurementId": "G-572D40E3CM",
+  "oAuthClientId": "",
+  "recaptchaSiteKey": ""
+}

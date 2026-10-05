@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">QChat</string>
+  <string name="asset_statements">[{"relation": ["delegate_permission/common.handle_all_urls"],"target": {"namespace": "android_app","package_name": "com.qchat.messenger","sha256_cert_fingerprints": ["14:6D:E9:7D:3B:56:88:51:71:0D:37:46:1D:C4:F3:D5:19:9C:2B:65:21:54:99:99:8A:2A:B2:D6:0B:A4:91:02"]}}]</string>
+</resources>

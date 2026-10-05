@@ -1,0 +1,122 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile in the chat app",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID matching auth UID" },
+        "qid": { "type": "string", "description": "Unique Quick Chat identifier (Q ID)", "maxLength": 50 },
+        "displayName": { "type": "string", "description": "Display name of the user", "maxLength": 100 },
+        "email": { "type": "string", "description": "User email address", "maxLength": 150 },
+        "phoneNumber": { "type": "string", "description": "Phone number with country code", "maxLength": 30 },
+        "photoURL": { "type": "string", "description": "Avatar image URL or icon identifier", "maxLength": 500 },
+        "statusText": { "type": "string", "description": "User bio or current custom status", "maxLength": 200 },
+        "isOnline": { "type": "boolean", "description": "Whether user is currently online" },
+        "lastSeen": { "type": "string", "format": "date-time", "description": "Last active timestamp" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "displayName", "email"]
+    },
+    "Channel": {
+      "title": "Channel",
+      "description": "Conversation channel or group chat",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Channel ID", "maxLength": 128 },
+        "name": { "type": "string", "description": "Display name of the chat or group", "maxLength": 100 },
+        "isGroup": { "type": "boolean", "description": "Whether this is a multi-user group chat" },
+        "participantIds": { "type": "array", "description": "List of participant user UIDs" },
+        "createdBy": { "type": "string", "description": "UID of the creator user", "maxLength": 128 },
+        "lastMessageText": { "type": "string", "description": "Preview snippet of the latest message", "maxLength": 500 },
+        "lastMessageTime": { "type": "string", "format": "date-time", "description": "Timestamp of the latest message" },
+        "lastMessageSenderId": { "type": "string", "description": "UID of the latest message sender", "maxLength": 128 }
+      },
+      "required": ["id", "isGroup", "participantIds", "createdBy"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A single real-time message inside a channel",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message ID", "maxLength": 128 },
+        "channelId": { "type": "string", "description": "Parent channel ID", "maxLength": 128 },
+        "senderId": { "type": "string", "description": "UID of the sender", "maxLength": 128 },
+        "senderName": { "type": "string", "description": "Display name of sender", "maxLength": 100 },
+        "senderPhoto": { "type": "string", "description": "Avatar of sender", "maxLength": 500 },
+        "text": { "type": "string", "description": "Text message content", "maxLength": 2000 },
+        "mediaType": { "type": "string", "description": "Attachment type (text, image, audio, sticker)", "enum": ["text", "image", "audio", "sticker"] },
+        "mediaUrl": { "type": "string", "description": "Optional media attachment URL or base64 data", "maxLength": 50000 },
+        "reactions": { "type": "object", "description": "Reaction counts and users map" },
+        "readBy": {
+          "type": "array",
+          "description": "List of user UIDs who have viewed or read the message",
+          "items": { "type": "string" }
+        },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["id", "channelId", "senderId", "senderName", "text"]
+    },
+    "MemberRequest": {
+      "title": "MemberRequest",
+      "description": "Friend or chat request sent between users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Request ID" },
+        "senderId": { "type": "string", "description": "UID of sender" },
+        "senderName": { "type": "string", "description": "Name of sender" },
+        "senderPhoto": { "type": "string", "description": "Avatar of sender" },
+        "senderQid": { "type": "string", "description": "Q ID of sender" },
+        "receiverId": { "type": "string", "description": "UID of recipient" },
+        "receiverName": { "type": "string", "description": "Name of recipient" },
+        "receiverPhoto": { "type": "string", "description": "Avatar of recipient" },
+        "receiverQid": { "type": "string", "description": "Q ID of recipient" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["senderId", "receiverId", "status"]
+    },
+    "DamiAccount": {
+      "title": "DamiAccount",
+      "description": "User's private or public dami (dummy) sub-accounts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique Dami Account ID" },
+        "name": { "type": "string", "description": "Unique name with ending numbers" },
+        "nameLower": { "type": "string", "description": "Lowercase name for uniqueness search" },
+        "type": { "type": "string", "enum": ["private", "public"], "description": "Privacy level" },
+        "creatorId": { "type": "string", "description": "UID of creator" },
+        "creatorName": { "type": "string", "description": "Creator display name" },
+        "creatorPhoto": { "type": "string", "description": "Creator photo URL" },
+        "description": { "type": "string", "description": "Bio or description" },
+        "avatarUrl": { "type": "string", "description": "Avatar icon or photo" },
+        "memberIds": { "type": "array", "description": "List of user UIDs who are members" },
+        "channelId": { "type": "string", "description": "Linked chat channel ID" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "nameLower", "type", "creatorId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/channels/{channelId}": {
+      "schema": "Channel",
+      "description": "Chat channels and direct conversations"
+    },
+    "/channels/{channelId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Real-time messages belonging to a channel"
+    },
+    "/member_requests/{requestId}": {
+      "schema": "MemberRequest",
+      "description": "Chat/friend requests between users"
+    },
+    "/dami_accounts/{damiId}": {
+      "schema": "DamiAccount",
+      "description": "Private and Public Dami accounts"
+    }
+  }
+}

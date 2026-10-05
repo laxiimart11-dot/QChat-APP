@@ -1,0 +1,50 @@
+{
+  "packageId": "com.qchat.messenger",
+  "host": "ais-pre-yek2ndeu5s4fqu2uhhikvm-756728280730.asia-southeast1.run.app",
+  "name": "QChat - Real-time Mobile Messenger",
+  "launcherName": "QChat",
+  "display": "standalone",
+  "themeColor": "#4F46E5",
+  "themeColorDark": "#090D16",
+  "navigationColor": "#090D16",
+  "navigationColorDark": "#090D16",
+  "navigationDividerColor": "#1E293B",
+  "navigationDividerColorDark": "#1E293B",
+  "backgroundColor": "#090D16",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://ais-pre-yek2ndeu5s4fqu2uhhikvm-756728280730.asia-southeast1.run.app/pwa-512x512.png",
+  "maskableIconUrl": "https://ais-pre-yek2ndeu5s4fqu2uhhikvm-756728280730.asia-southeast1.run.app/pwa-maskable-512x512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./qchat-release-key.keystore",
+    "alias": "qchat"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "New Chat",
+      "shortName": "Chat",
+      "url": "/?action=new-chat",
+      "icon": "https://ais-pre-yek2ndeu5s4fqu2uhhikvm-756728280730.asia-southeast1.run.app/pwa-192x192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://ais-pre-yek2ndeu5s4fqu2uhhikvm-756728280730.asia-southeast1.run.app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "fullScopeUrl": "https://ais-pre-yek2ndeu5s4fqu2uhhikvm-756728280730.asia-southeast1.run.app/"
+}

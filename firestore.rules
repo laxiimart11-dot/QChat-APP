@@ -1,0 +1,69 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Health check connection path
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if true; // Allows resolving Q ID and phone number before login, and directory search
+      allow create, update: if isSignedIn() && (request.auth.uid == userId || userId.matches('demo_.*'));
+    }
+
+    // Channels collection
+    match /channels/{channelId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn() && (
+        resource.data.createdBy == request.auth.uid ||
+        (resource.data.participantIds != null && request.auth.uid in resource.data.participantIds)
+      );
+
+      // Messages subcollection
+      match /messages/{messageId} {
+        allow read: if isSignedIn();
+        allow create: if (isSignedIn() && (request.resource.data.senderId == request.auth.uid || request.resource.data.senderId == 'system'))
+          || request.resource.data.isApiMessage == true
+          || (request.resource.data.senderId != null && request.resource.data.senderId.matches('dami_.*'));
+        allow update: if isSignedIn();
+        allow delete: if isSignedIn() && (
+          resource.data.senderId == request.auth.uid ||
+          resource.data.isOneTime == true
+        );
+      }
+    }
+
+    // Member / Friend requests collection
+    match /member_requests/{requestId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn();
+    }
+
+    // Dami accounts collection
+    match /dami_accounts/{damiId} {
+      allow read: if true; // Allows server-side token authentication & API lookups
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn() && resource.data.creatorId == request.auth.uid;
+    }
+  }
+}

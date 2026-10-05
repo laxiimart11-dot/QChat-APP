@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#3730a3" />
+    </linearGradient>
+    <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#e0e7ff" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  <!-- Chat bubble 1 -->
+  <path d="M128 220C128 162.562 178.146 116 240 116C301.854 116 352 162.562 352 220C352 277.438 301.854 324 240 324C218.736 324 198.816 318.528 181.76 309.04L136 322L149.28 280.48C135.84 263.2 128 242.4 128 220Z" fill="url(#bubbleGrad)"/>
+  <!-- Chat bubble pulse dots -->
+  <circle cx="196" cy="220" r="14" fill="#4f46e5"/>
+  <circle cx="240" cy="220" r="14" fill="#6366f1"/>
+  <circle cx="284" cy="220" r="14" fill="#818cf8"/>
+  <!-- Sub-bubble -->
+  <path d="M384 316C384 290.4 366.4 268.4 340.8 261.2C342.8 267.6 344 274.4 344 281.6C344 332.8 299.2 374.4 244 374.4C236.8 374.4 229.6 373.8 222.8 372.4C237.6 386.8 259.6 396 284 396C298.8 396 312.4 392.4 324 386L356 394L346.8 366C369.6 354.4 384 336.8 384 316Z" fill="#a5b4fc" fill-opacity="0.85"/>
+</svg>
